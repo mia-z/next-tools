@@ -112,6 +112,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/gapi@npm:^0.0.43":
+  version: 0.0.43
+  resolution: "@types/gapi@npm:0.0.43"
+  checksum: bf9550200337614b1f729ebf678e02ca252a2b61fab703fa57e5443fef7e6a631a46390d371c144660c3250dc0f7c7498afb33e17a8d8f0e16bfe8b2ae7786b9
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:18.11.5":
   version: 18.11.5
   resolution: "@types/node@npm:18.11.5"
@@ -337,6 +344,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "next-tools@workspace:."
   dependencies:
+    "@types/gapi": ^0.0.43
     "@types/node": 18.11.5
     "@types/qs": ^6.9.7
     "@types/react": 18.0.23
