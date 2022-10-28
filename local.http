@@ -1,0 +1,9 @@
+###
+
+GET http://localhost:3000/api/youtube/caption_fetcher HTTP/1.1
+
+###
+
+GET http://localhost:3000/api/youtube/caption_fetcher?youtubeUrl=https://www.youtube.com/watch?v=5IhwJvvJ2VA&list=RD5IhwJvvJ2VA HTTP/1.1
+
+###

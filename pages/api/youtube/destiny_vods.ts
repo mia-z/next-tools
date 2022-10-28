@@ -15,11 +15,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { results } = req.query;
 
     const maxResults = results ?? 25;
-
+console.warn(maxResults)
     try {
         const vods = await axios.get(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${vods_playlist_id}&key=${process.env.YOUTUBE_API_KEY}`, 
         { headers: { "Accept": "application/json", "Content-Type": "application/json" } });
-        console.log(vods.data);
         res.send(vods.data);
     } catch (e) {
         console.log(e);
