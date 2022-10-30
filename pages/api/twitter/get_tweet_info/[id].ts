@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         const twitterRes = await  axios.get("tweets/" + id + "?tweet.fields=created_at,in_reply_to_user_id,author_id&expansions=referenced_tweets.id", TwitterConfig);
-        return res.status(twitterRes.status).send(twitterRes.data);
+        return res.status(twitterRes.status).send(twitterRes.data.data);
     } catch (e) {
         console.log(e);
         res.status(500).send(e);
