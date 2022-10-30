@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         const twitterRes = await  axios.get("users/" + id + "/tweets?pagination_token=" + next_token + "&max_results=100", TwitterConfig);
-        return res.status(twitterRes.status).send(twitterRes.data.data);
+        return res.status(twitterRes.status).send(twitterRes.data);
     } catch (e) {
         console.log(e);
         res.status(500).send(e);

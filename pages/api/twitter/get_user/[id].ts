@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         const twitterRes = await  axios.get("users/" + id + "?user.fields=profile_image_url", TwitterConfig);
-        return res.status(twitterRes.status).send(twitterRes.data.data);
+        return res.status(twitterRes.status).send(twitterRes.data);
     } catch (e) {
         console.log(e);
         res.status(500).send(e);
