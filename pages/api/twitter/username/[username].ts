@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         if (result.status !== 200) {
             return res.status(result.status).send(result.data);
         }
-        return res.status(result.status).send(result.data.data);
+        return res.status(result.status).send(result.data);
     } catch (e) {
         console.log(e);
         res.send(e);
