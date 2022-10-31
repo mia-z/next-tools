@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-
     try {
         res.status(200);
         res.send("OK");

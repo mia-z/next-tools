@@ -2,17 +2,34 @@ import { NextResponse,NextRequest } from "next/server";
 
 const ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"];
 
+const HasValidOriginHeader = (header: string | null): boolean  => {
+    if (!header) {
+        return false;
+    } else {
+        if (ALLOWED_ORIGINS.includes(header)) {
+            return true
+        } else return false;
+    }
+}
+
 export async function middleware(req: NextRequest) {
     try {
-        
+        let validOrigin = HasValidOriginHeader(req.headers.get("Origin"));
         if (req.method === "OPTIONS") {
-            if (ALLOWED_ORIGINS.includes(req.headers.get("Origin") as string)) {
+            if (!validOrigin)  {
+                return NextResponse.next();
+            }
+            if (validOrigin) {
                 const response = NextResponse.next();
                 response.headers.append("Access-Control-Allow-Credentials", "true");
                 response.headers.append("Access-Control-Allow-Origin", req.headers.get("Origin") as string)
                 response.headers.append("Vary", "Origin");
                 return response;
             }
+        }
+
+        if (validOrigin) {
+            return NextResponse.next();
         }
 
         const authHeader = req.headers.get("Authorization");

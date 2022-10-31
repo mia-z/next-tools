@@ -4,13 +4,6 @@ import axios from "axios";
 import xml2js from "xml2js";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-
-	await NextCors(req, res, {
-        methods: ["GET", "POST"],
-        origin: ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"],
-        optionsSuccessStatus: 200
-    });
-
     try {
         const { youtubeUrl } = req.query;
 
