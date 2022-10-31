@@ -1,12 +1,11 @@
 import { NextResponse,NextRequest } from "next/server";
-
-const ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"];
+import { ALLOWED_URLS } from "./lib/Config";
 
 const HasValidOriginHeader = (header: string | null): boolean  => {
     if (!header) {
         return false;
     } else {
-        if (ALLOWED_ORIGINS.includes(header)) {
+        if (ALLOWED_URLS.includes(header)) {
             return true
         } else return false;
     }
