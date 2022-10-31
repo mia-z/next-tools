@@ -15,18 +15,6 @@ const HasValidOriginHeader = (header: string | null): boolean  => {
 export async function middleware(req: NextRequest) {
     try {
         let validOrigin = HasValidOriginHeader(req.headers.get("Origin"));
-        if (req.method === "OPTIONS") {
-            if (!validOrigin)  {
-                return NextResponse.next();
-            }
-            if (validOrigin) {
-                const response = NextResponse.next();
-                response.headers.append("Access-Control-Allow-Credentials", "true");
-                response.headers.append("Access-Control-Allow-Origin", req.headers.get("Origin") as string)
-                response.headers.append("Vary", "Origin");
-                return response;
-            }
-        }
 
         if (validOrigin) {
             return NextResponse.next();
@@ -66,6 +54,7 @@ export const config = {
     matcher: [ 
         "/api/youtube/:path*",
         "/api/spotify/:path*",
+        "/api/twitter/:path*",
         "/api/test"
      ]
 }

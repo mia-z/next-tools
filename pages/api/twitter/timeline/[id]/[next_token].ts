@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import NextCors from "nextjs-cors";
+import { TwitterConfig } from "../../../../../lib/TwitterConfig";
 import axios from "axios";
-
-const vods_playlist_id = "PLFs19LVskfNzQLZkGG_zf6yfYTp_3v_e6";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -12,13 +11,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             optionsSuccessStatus: 200
         });
         
-        const { results } = req.query;
+        const { id, next_token } = req.query;
 
-        const maxResults = results ?? 25;
-
-        const vods = await axios.get(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${vods_playlist_id}&key=${process.env.YOUTUBE_API_KEY}`, 
-        { headers: { "Accept": "application/json", "Content-Type": "application/json" } });
-        res.send(vods.data);
+        const result = await axios.get("users/" + id + "/tweets?pagination_token=" + next_token + "&max_results=100", TwitterConfig);
+        if (result.status !== 200) {
+            return res.status(result.status).send(result.data);
+        }
+        return res.status(result.status).send(result.data);
     } catch (e) {
         console.log(e);
         res.send(e);

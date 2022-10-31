@@ -6,6 +6,12 @@ import NextCors from "nextjs-cors";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const code = req.query.code;
 
+    await NextCors(req, res, {
+        methods: ["GET", "POST"],
+        origin: ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"],
+        optionsSuccessStatus: 200
+    });
+
     const authOpts = {
         url: "https://accounts.spotify.com/api/token",
         form: {
