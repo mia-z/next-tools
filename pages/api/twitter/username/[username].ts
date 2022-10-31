@@ -2,12 +2,13 @@ import { NextApiRequest, NextApiResponse } from "next"
 import NextCors from "nextjs-cors";
 import { TwitterConfig } from "../../../../lib/TwitterConfig";
 import axios from "axios";
+import { ALLOWED_URLS } from "../../../../lib/Config";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         await NextCors(req, res, {
             methods: ["GET", "POST"],
-            origin: ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"],
+            origin: ALLOWED_URLS,
             optionsSuccessStatus: 200
         });
         
