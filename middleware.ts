@@ -1,12 +1,31 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import NextCors from "nextjs-cors";
+import { NextResponse,NextRequest } from "next/server";
+
+const ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:8080", "https://miaz.xyz", "https://www.miaz.xyz"];
 
 export async function middleware(req: NextRequest) {
     try {
+        
+        if (req.method === "OPTIONS") {
+            if (ALLOWED_ORIGINS.includes(req.headers.get("Origin") as string)) {
+                const response = NextResponse.next();
+                response.headers.append("Access-Control-Allow-Credentials", "true");
+                response.headers.append("Access-Control-Allow-Origin", req.headers.get("Origin") as string)
+                response.headers.append("Vary", "Origin");
+                return response;
+            }
+        }
+
         const authHeader = req.headers.get("Authorization");
 
         const { BASIC_USERNAME, BASIC_PASSWORD } = process.env;
+
+        const splitHeader = authHeader?.split(" ");
+
+        if (!splitHeader) {
+            req.nextUrl.searchParams.set("from", req.nextUrl.basePath);
+            req.nextUrl.pathname = "/api/auth-error"
+            return NextResponse.redirect(req.nextUrl);
+        }
 
         const parsed = atob(authHeader?.split(" ")[1] as string);
 
@@ -29,7 +48,6 @@ export async function middleware(req: NextRequest) {
 export const config = {
     matcher: [ 
         "/api/youtube/:path*",
-        "/api/twitter/:path*",
         "/api/spotify/:path*",
         "/api/test"
      ]
